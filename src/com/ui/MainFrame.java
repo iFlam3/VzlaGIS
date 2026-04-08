@@ -36,6 +36,7 @@ public class MainFrame extends JFrame {
         cardPanel.add(new ParroquiaCrudPanel(this), "PARROQUIAS");
         cardPanel.add(new EstadisticasPanel(this), "ESTADISTICAS");
         cardPanel.add(new MapaPanel(this), "MAPA");
+        cardPanel.add(new UsuarioCrudPanel(this), "USUARIOS");
 
         add(cardPanel, BorderLayout.CENTER);
 

@@ -38,6 +38,18 @@ public class MunicipioCrudPanel extends BasePanel {
         JButton btnEditar = new JButton("Editar");
         JButton btnEliminar = new JButton("Eliminar");
 
+        JButton btnBuscar = new JButton("Buscar por ID");
+        btnBuscar.setBackground(new Color(23, 162, 184)); // Color cyan para destacar
+        btnBuscar.setForeground(Color.WHITE);
+        btnBuscar.putClientProperty("JButton.buttonType", "roundRect");
+
+        btnBuscar.addActionListener(e -> buscarPorId());
+
+// Añádelo al panel de botones (justo después del de Exportar es un buen lugar)
+        pnlBotones.add(btnExportar);
+        pnlBotones.add(btnBuscar);
+// ... pnlBotones.add(btnCrear); etc.
+
         if (com.util.Sesion.esSoloLectura()) {
             btnCrear.setVisible(false);
             btnEditar.setVisible(false);
@@ -95,6 +107,24 @@ public class MunicipioCrudPanel extends BasePanel {
                 }
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "El ID del estado debe ser un número.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private void buscarPorId() {
+        String input = JOptionPane.showInputDialog(this, "Ingrese el ID a buscar:");
+        if (input != null && !input.trim().isEmpty()) {
+            boolean encontrado = false;
+            for (int i = 0; i < tabla.getRowCount(); i++) {
+                if (tabla.getValueAt(i, 0).toString().equals(input.trim())) {
+                    tabla.setRowSelectionInterval(i, i);
+                    tabla.scrollRectToVisible(tabla.getCellRect(i, 0, true));
+                    encontrado = true;
+                    break;
+                }
+            }
+            if (!encontrado) {
+                JOptionPane.showMessageDialog(this, "No se encontró ningún registro con el ID: " + input, "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         }
     }

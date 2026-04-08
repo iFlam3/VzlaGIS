@@ -46,9 +46,9 @@ public class MenuPanel extends JPanel {
         // --- GESTIÓN DE USUARIOS (Con control de roles) ---
         JButton btnRegistro = crearBotonMenu("Registrar Usuario");
         if (Sesion.esSoloLectura()) {
-            btnRegistro.setVisible(false); // Oculto para Lectores (Rol 3)
+            btnRegistro.setVisible(false);
         } else {
-            btnRegistro.addActionListener(e -> mainFrame.navegarA("REGISTRO"));
+            btnRegistro.addActionListener(e -> mainFrame.navegarA("USUARIOS"));
         }
         gbc.gridx = 1; add(btnRegistro, gbc); // <-- Aquí faltaba el add()
 
@@ -67,6 +67,7 @@ public class MenuPanel extends JPanel {
                 LoginFrame nuevoLogin = new LoginFrame(authService);
                 nuevoLogin.setVisible(true);
             }
+
         });
 
         // Lo colocamos al fondo, ocupando las dos columnas
