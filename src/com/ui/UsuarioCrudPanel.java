@@ -7,6 +7,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class UsuarioCrudPanel extends BasePanel {
 
@@ -85,10 +86,13 @@ public class UsuarioCrudPanel extends BasePanel {
 
         int opcion = JOptionPane.showConfirmDialog(this, mensaje, "Nuevo Usuario", JOptionPane.OK_CANCEL_OPTION);
         if (opcion == JOptionPane.OK_OPTION) {
-            int rolId = cbRoles.getSelectedIndex() + 1; // Índices 0,1,2 pasan a ser 1,2,3
+            int rolId = cbRoles.getSelectedIndex() + 1;
             String passStr = new String(txtPass.getPassword());
 
-            Usuario nuevo = new Usuario((Long) null, txtUser.getText(), passStr, rolId, true, null);
+            String hashedPassword = BCrypt.hashpw(passStr, BCrypt.gensalt());
+
+            Usuario nuevo = new Usuario((Long) null, txtUser.getText(), hashedPassword, rolId, true, null);
+
             if(usuarioDAO.create(nuevo)){
                 cargarDatos();
             } else {

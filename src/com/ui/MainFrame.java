@@ -17,7 +17,7 @@ public class MainFrame extends JFrame {
     }
 
     private void configurarVentana() {
-        setTitle("Sistema Geográfico de Venezuela - Panel de Control");
+        setTitle("Sistema Geográfico de Venezuela");
         setSize(900, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // Centrar

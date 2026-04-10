@@ -17,34 +17,25 @@ public class MapaPanel extends BasePanel {
     private JXMapViewer mapViewer;
 
     public MapaPanel(MainFrame mainFrame) {
-        super(mainFrame, "Explorador de Mapas (OpenStreetMap)");
+        super(mainFrame, "Explorador de Mapas");
 
         panelContenido.setLayout(new BorderLayout());
 
-        // ==========================================================
-        // LA SOLUCIÓN: 1. Identificar nuestra app (User-Agent)
-        // ==========================================================
         System.setProperty("http.agent", "MiAppGIS_Venezuela/1.0");
 
-        // 2. Inicializar el visor del mapa
         mapViewer = new JXMapViewer();
 
-        // 3. Configurar la fuente (Forzamos HTTPS por seguridad)
         TileFactoryInfo info = new OSMTileFactoryInfo("OpenStreetMap", "https://tile.openstreetmap.org");
         DefaultTileFactory tileFactory = new DefaultTileFactory(info);
 
-        // 4. (Opcional pero recomendado) Añadir hilos para que cargue más rápido
         tileFactory.setThreadPoolSize(8);
         mapViewer.setTileFactory(tileFactory);
 
-        // 5. Coordenadas centrales de Venezuela (Latitud 8.0, Longitud -66.0)
-        GeoPosition venezuela = new GeoPosition(8.0, -66.0);
+        GeoPosition venezuela = new GeoPosition(10.41, -71.38);
 
-        // 6. Configurar el zoom y la posición inicial
         mapViewer.setZoom(5);
         mapViewer.setAddressLocation(venezuela);
 
-        // 5. Añadir interactividad (Arrastrar y hacer Zoom con la rueda del ratón)
         MouseInputListener mia = new PanMouseInputListener(mapViewer);
         mapViewer.addMouseListener(mia);
         mapViewer.addMouseMotionListener(mia);
