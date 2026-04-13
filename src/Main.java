@@ -11,20 +11,24 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            UIManager.setLookAndFeel(new FlatDarkLaf());
+            UIManager.setLookAndFeel(new com.formdev.flatlaf.FlatDarkLaf());
         } catch (Exception ex) {
-            System.err.println("Error al inicializar FlatLaf: " + ex.getMessage());
+            System.err.println("Error al inicializar FlatLaf");
         }
 
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         AuthService authService = new AuthService(usuarioDAO);
 
         if (usuarioDAO.findByUsername("admin") == null) {
-            boolean creado = authService.registrarUsuario("admin", "1234", 1);
+            boolean creado = authService.registrarUsuario("admin", "admin123", 1);
+            if (creado) {
+                System.out.println("Usuario 'admin' creado exitosamente con hash BCrypt.");
+            }
         }
+        // -------------------------------------------------------
 
         SwingUtilities.invokeLater(() -> {
-            LoginFrame loginFrame = new LoginFrame(authService);
+            com.ui.LoginFrame loginFrame = new com.ui.LoginFrame(authService);
             loginFrame.setVisible(true);
         });
     }

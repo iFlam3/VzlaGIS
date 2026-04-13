@@ -43,6 +43,20 @@ public class MenuPanel extends JPanel {
         btnStats.addActionListener(e -> mainFrame.navegarA("ESTADISTICAS"));
         gbc.gridy = 3; gbc.gridx = 0; add(btnStats, gbc);
 
+        JButton btnVerMapa = new JButton("Ver Globo Terráqueo");
+        btnVerMapa.addActionListener(e -> {
+            // Abrir la ventana en el Event Dispatch Thread (EDT)
+            SwingUtilities.invokeLater(() -> {
+                JFrame frame = new JFrame("VzlaGIS - Visualizador 3D");
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.setSize(800, 600);
+                frame.add(new PanelGlobo3D());
+                frame.setLocationRelativeTo(null); // Centrar en pantalla
+                frame.setVisible(true);
+            });
+        });
+        add(btnVerMapa);
+
         // --- GESTIÓN DE USUARIOS (Con control de roles) ---
         JButton btnRegistro = crearBotonMenu("Registrar Usuario");
         if (Sesion.esSoloLectura()) {
@@ -50,7 +64,8 @@ public class MenuPanel extends JPanel {
         } else {
             btnRegistro.addActionListener(e -> mainFrame.navegarA("USUARIOS"));
         }
-        gbc.gridx = 1; add(btnRegistro, gbc); // <-- Aquí faltaba el add()
+        gbc.gridx = 1; add(btnRegistro, gbc);
+
 
         // --- BOTÓN DE CERRAR SESIÓN ---
         JButton btnCerrarSesion = crearBotonMenu("Cerrar Sesión");
